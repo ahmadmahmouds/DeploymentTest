@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    {% load static%}
+    <link rel="stylesheet" href="{%static 'css/register.css'%}">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script>
+        $(document).ready(function () {
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            const csrftoken = getCookie('csrftoken');
+            $("#email").keyup("click", function () {
+                var email = $(this).val();
+                $(this).removeClass('is-invalid');
+                $(this).removeClass('is-valid');
+                th = $(this);
+                invalidFeedback_p=$('#invalid-email small');
+                invalidFeedBack = $('#invalid-email');
+                invalidFeedback_p.remove()
+                // console.log("the value is",value)
+                var request = $.ajax({
+                    url: '{% url "validateEmailByAjax" %}',
+                    method: "POST",
+                    data: {
+                        csrfmiddlewaretoken: csrftoken,
+                        email: email
+                    },
+                    dataType: "json"
+                });
+                request.done(function (msg) {
+                    
+                    if (msg.email.length > 0) {
+                        th.addClass('is-invalid');
+                        invalidFeedBack.html('<small>'+msg.email+'</small>');
+                        invalidFeedBack.css("display","block");
+                    }else{
+                        console.log("the file return the message----->", msg.email)
+                        th.addClass('is-valid');
+                        
+
+                    }
+
+
+
+
+                });
+                request.fail(function (jqXHR, textStatus) {
+                    // alert("the request fail:some thing wrong")
+
+                    // alert("Request failed: " + textStatus);
+                });
+
+            });
+
+
+
+
+
+
+
+
+
+
+            $("#fname").keyup("click", function () {
+                var fname = $(this).val();
+                $(this).removeClass('is-invalid');
+                $(this).removeClass('is-valid');
+                th = $(this)
+                invalidFeedback_p=$('#invalid-fname small');
+                invalidFeedBack = $('#invalid-fname');
+                invalidFeedback_p.remove()
+                // console.log("the value is",value)
+                var request = $.ajax({
+                    url: '{% url "validateFirstNameByAjax" %}',
+                    method: "POST",
+                    data: {
+                        csrfmiddlewaretoken: csrftoken,
+                        fname: fname
+                    },
+                    dataType: "json"
+                });
+                request.done(function (msg) {
+                    if (msg.fname.length > 0) {
+                        th.addClass('is-invalid');
+                        invalidFeedBack.html('<small>'+msg.fname+'</small>');
+                        invalidFeedBack.css("display","block");
+                    }else{
+                        console.log("the file return the message----->", msg.fname)
+                        th.addClass('is-valid');
+
+                    }
+
+
+
+
+                });
+                request.fail(function (jqXHR, textStatus) {
+                    // alert("the request fail:some thing wrong")
+
+                    // alert("Request failed: " + textStatus);
+                });
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $("#lname").keyup("click", function () {
+                var lname = $(this).val();
+                $(this).removeClass('is-invalid');
+                $(this).removeClass('is-valid');
+                th = $(this)
+                invalidFeedback_p=$('#invalid-lname small');
+                invalidFeedBack = $('#invalid-lname');
+                invalidFeedback_p.remove()
+                // console.log("the value is",value)
+                var request = $.ajax({
+                    url: '{% url "validateLastNameByAjax" %}',
+                    method: "POST",
+                    data: {
+                        csrfmiddlewaretoken: csrftoken,
+                        lname: lname
+                    },
+                    dataType: "json"
+                });
+                request.done(function (msg) {
+                    if (msg.lname.length > 0) {
+                        th.addClass('is-invalid');
+                        invalidFeedBack.html('<small>'+msg.lname+'</small>');
+                        invalidFeedBack.css("display","block");
+                    }else{
+                        console.log("the file return the message----->", msg.lname)
+                        th.addClass('is-valid');
+
+                    }
+
+
+
+
+                });
+                request.fail(function (jqXHR, textStatus) {
+                    // alert("the request fail:some thing wrong")
+
+                    // alert("Request failed: " + textStatus);
+                });
+
+            });
+            $("#password").keyup("click", function () {
+                var password = $(this).val();
+                $(this).removeClass('is-invalid');
+                $(this).removeClass('is-valid');
+                th = $(this)
+                invalidFeedback_p=$('#invalid-password small');
+                invalidFeedBack = $('#invalid-password');
+                invalidFeedback_p.remove()
+                // console.log("the value is",value)
+                var request = $.ajax({
+                    url: '{% url "validatePasswordByAjax" %}',
+                    method: "POST",
+                    data: {
+                        csrfmiddlewaretoken: csrftoken,
+                        password: password
+                    },
+                    dataType: "json"
+                });
+                request.done(function (msg) {
+                    if (msg.password.length > 0) {
+                        th.addClass('is-invalid');
+                        invalidFeedBack.html('<small>'+msg.password+'</small>');
+                        invalidFeedBack.css("display","block");
+                    }else{
+                        console.log("the file return the message----->", msg.password)
+                        th.addClass('is-valid');
+
+                    }
+
+
+
+
+                });
+                request.fail(function (jqXHR, textStatus) {
+                    // alert("the request fail:some thing wrong")
+
+                    // alert("Request failed: " + textStatus);
+                });
+
+            });
+
+
+
+
+
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+    <div class="wraper">
+        <div class="container-sign ">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <form action="/register" method="post">
+                        {% csrf_token %} <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" id="email" name="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="Enter email">
+
+                        </div>
+                        <div class="invalid-feedback mb-2" id="invalid-email">
+                            <small></small>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+
+                        </div>
+                        <div class="invalid-feedback" id="invalid-fname">
+                            <small></small>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">Last Name</label>
+                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+
+                        </div>
+                        <div class="invalid-feedback mb-2" id="invalid-lname">
+                            <small></small>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control" id="password"
+                                placeholder="Password">
+                        </div>
+                        <div class="invalid-feedback mb-2" id="invalid-password">
+                            <small></small>
+                            
+                        </div>
+
+                        <div class="btn-button-signin">
+                            <button type="submit" class="btn btn-primary button-signin">Create account</button>
+                            <p>Already have an account?</p>
+                            <a class="btn btn-primary" href="/show_login_form" role="button">Sign in</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>
